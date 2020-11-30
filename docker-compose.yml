@@ -1,0 +1,89 @@
+version: "2"
+services:
+
+  nginx:
+    image: nginx:latest
+    #restart: always
+    container_name: nginx
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx/
+      - ./nginx/html:/usr/share/nginx/html/
+      - /etc/localtime:/etc/localtime
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.101
+  
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    #restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass 123456
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/usr/local/redis/data/
+      - ./redis/logs:/usr/local/redis/
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - /etc/localtime:/etc/localtime
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.2
+      
+
+  postgres:
+    image: postgres:12
+    #restart: always
+    privileged: true 
+    container_name: postgres 
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data/pgdata
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - /etc/localtime:/etc/localtime
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.3  
+      
+
+  web-server:
+    image: java:8
+    #restart: always
+    privileged: true  
+    ports:
+      - 9004:9004
+    volumes:
+      - ./java-server/web-lockysheet-server.jar:/usr/local/luckysheet-server/app.jar
+      - ./java-server/application.yml:/usr/local/luckysheet-server/application.yml
+      - ./java-server/application-dev.yml:/usr/local/luckysheet-server/application-dev.yml
+      - /etc/localtime:/etc/localtime
+    command: [
+      'java',
+      '-Xmx200m',
+      '-jar',
+      '/usr/local/luckysheet-server/app.jar',
+      '--spring.config.location=/usr/local/luckysheet-server/application.yml,/usr/local/luckysheet-server/application-dev.yml'
+    ]  
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.4
+
+networks:
+   extnetwork:
+      ipam:
+         config:
+         - subnet: 172.19.0.0/16
+           gateway: 172.19.0.1    
