@@ -125,7 +125,10 @@ http://xx.100.104.9/luckysheet/test/constant?param=123
 
 访问Luckysheet demo
 ```shell
-http://xx.100.104.9
+＃ 静态demo 
+http://xx.100.104.9 
+＃ 协同编辑模式
+http://xx.100.104.9?share
 ```
 
 #### 7. 配置文件
