@@ -62,11 +62,12 @@ services:
   web-server:
     image: java:8
     #restart: always
-    privileged: true  
+    privileged: true
+    container_name: luckysheet-server  
     ports:
       - 9004:9004
     volumes:
-      - ./java-server/web-lockysheet-server.jar:/usr/local/luckysheet-server/app.jar
+      - ./java-server/web-luckysheet-server.jar:/usr/local/luckysheet-server/app.jar
       - ./java-server/application.yml:/usr/local/luckysheet-server/application.yml
       - ./java-server/application-dev.yml:/usr/local/luckysheet-server/application-dev.yml
       - /etc/localtime:/etc/localtime
@@ -87,3 +88,4 @@ networks:
          config:
          - subnet: 172.19.0.0/16
            gateway: 172.19.0.1    
+            

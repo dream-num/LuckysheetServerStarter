@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/css/pluginsCss.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/plugins.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/css/luckysheet.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/assets/iconfont/iconfont.css' />
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/luckysheet.umd.js"></script>
+    
+    <title>Luckysheet</title>
+</head>
+<body>
+    <div id="luckysheet" style="margin:0px;padding:0px;position:absolute;width:100%;height:100%;left: 0px;top: 0px;"></div>
+    <!-- demo feature, non-production use -->
+	<script src="https://cdn.jsdelivr.net/npm/luckysheet@2.1.7/dist/demoData/demoFeature.js"></script>
+    <script>
+        $(function () {
+
+            var lang = luckysheetDemoUtil.language() === 'zh' ? 'zh' : 'en';
+            var isShare = luckysheetDemoUtil.getRequest().share; //Add the '?share' parameter to the url, open the collaborative editing mode
+            var options = null;
+
+            options = {
+                    container: "luckysheet",
+                    lang: lang,
+                    allowUpdate:true,
+                    updateImageUrl: location.origin + "/luckysheet/api/updateImg",
+                    updateUrl: "ws://"+ location.host +"/luckysheet/websocket/luckysheet",
+                    "gridKey": "1079500#-8803#7c45f52b7d01486d88bc53cb17dcd2c3",
+                    loadUrl: location.origin + "/luckysheet/api/load",
+                    loadSheetUrl: location.origin + "/luckysheet/api/loadsheet"
+                }
+
+            luckysheet.create(options);
+
+        })
+    </script>
+</body>
+</html>
