@@ -125,7 +125,10 @@ http://xx.100.104.9/luckysheet/test/constant?param=123
 
 Visit Luckysheet demo
 ```shell
+＃ static demo
 http://xx.100.104.9
+＃ Collaborative editing mode
+http://xx.100.104.9?share
 ```
 
 #### 7. Configuration file
