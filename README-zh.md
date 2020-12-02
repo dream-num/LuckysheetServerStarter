@@ -26,7 +26,7 @@ C:\Users\Administrator\Desktop\lsheet>tree /f
 │  │  nginx.conf  #nginx配置
 │  │
 │  ├─html         #nginx静态文件夹
-|  |  luckysheet_demo.html # Luckysheet demo
+|  |  index.html # Luckysheet demo
 |  |
 │  └─logs          #nginx日志文件夹
 ├─postgres
@@ -243,7 +243,7 @@ http {
          
         location / {
             root   /usr/share/nginx/html/;
-            index  index.html index.htm luckysheet_demo;            
+            index  index.html index.htm;            
             
             proxy_connect_timeout 1800;
             proxy_read_timeout 600;
